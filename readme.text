@@ -1,0 +1,243 @@
+                           API Endpoints
+
+
+1. Authentication
+
+POST /auth/login
+Description: Common login endpoint for HR and Employees.
+Request Body:
+
+json
+{
+  "email": <email>,
+  "password": <password>
+}
+
+Response:
+
+json
+{
+    "message": "Login successful",
+    "token": <token>,
+    "user": {
+        "id": <id>,
+        "username": <username>,
+        "role": <role>
+    }
+}
+
+
+
+
+2. HR Management
+
+POST /hr/create-user
+Description: Create a new HR or Employee user.
+
+Request Body:
+
+json
+{
+  "name": <name>,
+  "email": <email>,
+  "password": <password>,
+  "role": "<role>, // or "hr"
+  "address": <address>,
+  "grade": <grade>,
+  "job_location": "<job_location>,
+  "reporting_manager": <reporting_manager>,
+  "joining_date": <joining_date>
+}
+
+Response:
+
+json
+{
+    "id": <id>,
+    "name": <name>,
+    "address": <address>,
+    "grade": <grade>,
+    "job_location": <job_location>,
+    "reporting_manager": <reporting_manager>,
+    "joining_date": <joining_date>,
+    "role": <role>,
+    "password": <password>,
+    "updatedAt": <updatedAt>,
+    "createdAt": <createdAt>
+}
+
+
+
+
+3. Employee Management
+
+GET /employee/personal-info
+Description: Get employee's personal information.
+
+Response:
+
+json
+{
+  "id": <id>,
+  "name": <name>,
+  "address": <address>,
+  "grade": <grade>,
+  "job_location":<job_location>,
+  "reporting_manager": <reporting_manager>,
+  "joining_date":<joining_date>
+}
+
+
+
+
+4. Leave Management
+
+POST /employee/leave-request
+Description: Submit a leave request.
+Request Body:
+
+json
+{
+  "start_date": <start_date>,
+  "end_date": <end_date>,
+  "reason": <reason>
+}
+
+Response:
+
+json
+{
+    "message": "Leave request submitted successfully."
+}
+
+
+
+GET /hr/leave-requests
+
+Description: Fetch all leave requests (HR-only).
+
+Response:
+
+json
+[
+  {
+    "id": <id>,
+    "employee_id": <employee_id>,
+    "start_date": <start_date>,
+    "end_date": <end_date>,
+    "reason": <reason>,
+    "status":<status>
+  }
+  .
+  .
+  .
+]
+
+
+
+POST /hr/leave-requests/:id
+
+Description: Update leave request status (accept/reject).
+Request Body:
+
+json
+{
+  "status": "accepted" // or "rejected"
+}
+
+Response:
+
+json
+{
+    "id": <id>,
+    "userId": <userId>,
+    "leaveType": <leaveType>,
+    "leaveBalance": <leaveBalance>,
+    "status": "Accepted", //Updated
+    "dayDiff": <dayDiff>,
+    "createdAt": <createdAt>,
+    "updatedAt": <updatedAt>
+}
+
+
+
+
+
+5. Reimbursement Management
+
+POST /employee/reimbursement-request
+
+Description: Submit a reimbursement request with PDF attachment.
+Request Body:
+
+json
+
+{
+  "amount": <amount>,
+  "description": <description>,
+  "attachment": <base64-encoded-pdf>
+}
+
+Response:
+
+json
+{
+    "status": <status>,
+    "id": <id>,
+    "userId":<userId>,
+    "amount": <amount>,
+    "attachment": "<attachment>,
+    "updatedAt": <updatedAt>,
+    "createdAt": <createdAt>
+}
+
+
+
+GET /hr/reimbursement-requests
+
+Description: Fetch all reimbursement requests (HR-only).
+Response:
+
+json
+[
+    {
+        "id": <id>,
+        "userId": <userId>,
+        "amount": <amount>,
+        "attachment": <attachment>,
+        "status": <status>, 
+        "createdAt": <createdAt>,
+        "updatedAt": <updatedAt>
+    }
+    .
+    .
+    .
+]
+
+
+
+POST /hr/reimbursement-requests/:id
+
+Description: Update reimbursement request status (accept/reject).
+Request Body:
+
+json
+{
+  "status": "accepted" // or "rejected"
+}
+
+Response:
+
+json
+{
+    "id": <id>,
+    "userId": <userId>,
+    "amount": <amount>,
+    "attachment": <attachment>,
+    "status": "Accepted",  // updated
+    "createdAt": <createdAt>,
+    "updatedAt": <updatedAt>
+}
+
+
+
